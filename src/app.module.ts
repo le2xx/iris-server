@@ -1,20 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RssController } from './rss/rss.controller';
-import { RssService } from './rss/rss.service';
-import { HttpModule } from '@nestjs/axios';
-import { ScheduleModule } from '@nestjs/schedule';
+import { ConfigModule } from '@nestjs/config';
+import { TelegramModule } from './telegram/telegram.module';
+import { RssModule } from './rss/rss.module';
 
 @Module({
   imports: [
-    HttpModule.register({
-      timeout: 5000,
-      maxRedirects: 5,
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
-    ScheduleModule.forRoot(),
+    RssModule,
+    TelegramModule,
   ],
-  controllers: [AppController, RssController],
-  providers: [AppService, RssService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
