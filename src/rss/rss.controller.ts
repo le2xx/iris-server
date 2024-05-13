@@ -19,7 +19,7 @@ export class RssController {
     return this.rssService.getRss(this.url).pipe(map((rss) => rss.statusText));
   }
 
-  @Cron('*/10 * * * * 1')
+  @Cron('*/10 1 * * * *')
   handleCron(): void {
     this.rssService
       .getRss(this.url)
