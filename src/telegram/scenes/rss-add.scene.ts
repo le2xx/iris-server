@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Ctx, Message, On, Scene, SceneEnter } from 'nestjs-telegraf';
 import { SceneContext } from 'telegraf/scenes';
 import { RssItem, TelegramCommands } from '../telegram.models';
+import { RssTableService } from '../../database/rss-table.service';
 
 enum AddRssState {
   name = 'name',
@@ -13,6 +14,8 @@ enum AddRssState {
 export class RssAddScene {
   private state = AddRssState.name;
   private result: RssItem = { name: '', url: '' };
+
+  constructor(private rssTableService: RssTableService) {}
 
   @SceneEnter()
   async unlinkEnter(@Ctx() ctx: SceneContext) {
@@ -47,6 +50,10 @@ export class RssAddScene {
     const urlRegExp = /^(ftp|http|https):\/\/[^ "]+$/;
     if (urlRegExp.test(text)) {
       this.result.url = text;
+      this.rssTableService
+        .createRss(this.result)
+        .then((v) => console.log('----v', v))
+        .catch((err) => console.log('---err', err));
       await ctx.reply('Принято');
       await ctx.scene.leave();
       this.state = AddRssState.name;

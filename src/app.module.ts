@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TelegramModule } from './telegram/telegram.module';
 import { RssModule } from './rss/rss.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -13,16 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     }),
     RssModule,
     TelegramModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'iris_user',
-      password: 'iris_password',
-      database: 'iris_db',
-      entities: [],
-      synchronize: true,
-    }),
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
