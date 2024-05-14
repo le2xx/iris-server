@@ -4,6 +4,7 @@ import { RssList } from './rss-table.entity';
 import { Repository } from 'typeorm';
 import { RssItem } from '../telegram/telegram.models';
 import { from, Observable } from 'rxjs';
+import { DeleteResult } from 'typeorm/query-builder/result/DeleteResult';
 
 @Injectable()
 export class RssTableService {
@@ -19,5 +20,9 @@ export class RssTableService {
 
   getAllRss(): Observable<RssList[]> {
     return from(this.rssTableRepository.find());
+  }
+
+  deleteRssById(id: string): Observable<DeleteResult> {
+    return from(this.rssTableRepository.delete(id));
   }
 }

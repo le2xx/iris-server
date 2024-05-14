@@ -1,4 +1,4 @@
-import { RssItem, TelegramCommandsItem } from './telegram.models';
+import { TelegramCommandsItem } from './telegram.models';
 
 export const startTemplate = (name: string) => {
   return `<b>Привет, ${name}</b>`;
@@ -13,8 +13,4 @@ export const helpTemplate = (commandsList: TelegramCommandsItem[]) => {
       })
       .join('\n')
   );
-};
-
-export const rssItemTemplate = (rss: RssItem) => {
-  return `<b>${rss.name} - </b><i>${rss.url}</i>`;
 };

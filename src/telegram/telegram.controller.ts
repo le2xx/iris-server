@@ -1,11 +1,7 @@
 import { Command, Help, InjectBot, Start, Update } from 'nestjs-telegraf';
 import { Context, Telegraf } from 'telegraf';
-import {
-  helpTemplate,
-  rssItemTemplate,
-  startTemplate,
-} from './telegram.templates';
-import { telegramCommandsList, rssList } from './telegram.mock';
+import { helpTemplate, startTemplate } from './telegram.templates';
+import { telegramCommandsList } from './telegram.mock';
 import { TelegramCommands } from './telegram.models';
 import { SceneContext } from 'telegraf/scenes';
 
@@ -29,10 +25,8 @@ export class TelegramController {
   }
 
   @Command(TelegramCommands.rss_list)
-  async rssList(ctx: Context) {
-    await ctx.replyWithHTML(
-      rssList.map((item) => rssItemTemplate(item)).join('\n'),
-    );
+  async rssList(ctx: SceneContext) {
+    await ctx.scene.enter(TelegramCommands.rss_list);
   }
 
   // @On('text')
