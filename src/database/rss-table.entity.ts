@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class RssTable {
+export class RssList {
   @PrimaryGeneratedColumn()
   id: number;
 

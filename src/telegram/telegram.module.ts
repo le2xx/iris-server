@@ -5,12 +5,12 @@ import { RssAddScene } from './scenes/rss-add.scene';
 import { TelegramController } from './telegram.controller';
 import { RssTableService } from '../database/rss-table.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RssTable } from '../database/rss-table.entity';
+import { RssList } from '../database/rss-table.entity';
 
 @Module({
   imports: [
     TelegrafModule.forRootAsync(options()),
-    TypeOrmModule.forFeature([RssTable]),
+    TypeOrmModule.forFeature([RssList]),
   ],
   exports: [TypeOrmModule],
   providers: [TelegramController, RssTableService, RssAddScene],

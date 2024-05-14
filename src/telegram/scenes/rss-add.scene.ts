@@ -50,10 +50,10 @@ export class RssAddScene {
     const urlRegExp = /^(ftp|http|https):\/\/[^ "]+$/;
     if (urlRegExp.test(text)) {
       this.result.url = text;
-      this.rssTableService
-        .createRss(this.result)
-        .then((v) => console.log('----v', v))
-        .catch((err) => console.log('---err', err));
+      this.rssTableService.createRss(this.result).subscribe(
+        (v) => console.log('----v', v),
+        (err) => console.log('---err', err),
+      );
       await ctx.reply('Принято');
       await ctx.scene.leave();
       this.state = AddRssState.name;

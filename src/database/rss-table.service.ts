@@ -1,22 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RssTable } from './rss-table.entity';
+import { RssList } from './rss-table.entity';
 import { Repository } from 'typeorm';
 import { RssItem } from '../telegram/telegram.models';
+import { from, Observable } from 'rxjs';
 
 @Injectable()
 export class RssTableService {
   constructor(
-    @InjectRepository(RssTable)
-    private readonly rssTableRepository: Repository<RssTable>,
+    @InjectRepository(RssList)
+    private readonly rssTableRepository: Repository<RssList>,
   ) {}
 
-  async createRss(rss: RssItem): Promise<RssTable> {
+  createRss(rss: RssItem): Observable<RssList> {
     const rssItem = this.rssTableRepository.create(rss);
-    return this.rssTableRepository.save(rssItem);
+    return from(this.rssTableRepository.save(rssItem));
   }
 
-  async getAllRss(): Promise<RssTable[]> {
-    return this.rssTableRepository.find();
+  getAllRss(): Observable<RssList[]> {
+    return from(this.rssTableRepository.find());
   }
 }
